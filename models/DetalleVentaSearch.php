@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Actor;
+use app\models\DetalleVenta;
 
 /**
- * ActorSearch represents the model behind the search form of `app\models\Actor`.
+ * DetalleVentaSearch represents the model behind the search form of `app\models\DetalleVenta`.
  */
-class ActorSearch extends Actor
+class DetalleVentaSearch extends DetalleVenta
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,9 @@ class ActorSearch extends Actor
     public function rules()
     {
         return [
-            [['idactor'], 'integer'],
-            [['nombres', 'apellidos', 'biografia'], 'safe'],
+            [['iddetalle', 'venta_idventa', 'productos_idproducto'], 'integer'],
+            [['cantidad'], 'safe'],
+            [['precio_unitario', 'precio_total'], 'number'],
         ];
     }
 
@@ -41,7 +42,7 @@ class ActorSearch extends Actor
      */
     public function search($params, $formName = null)
     {
-        $query = Actor::find();
+        $query = DetalleVenta::find();
 
         // add conditions that should always apply here
 
@@ -59,12 +60,14 @@ class ActorSearch extends Actor
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'idactor' => $this->idactor,
+            'iddetalle' => $this->iddetalle,
+            'precio_unitario' => $this->precio_unitario,
+            'precio_total' => $this->precio_total,
+            'venta_idventa' => $this->venta_idventa,
+            'productos_idproducto' => $this->productos_idproducto,
         ]);
 
-        $query->andFilterWhere(['like', 'nombres', $this->nombres])
-            ->andFilterWhere(['like', 'apellidos', $this->apellidos])
-            ->andFilterWhere(['like', 'biografia', $this->biografia]);
+        $query->andFilterWhere(['like', 'cantidad', $this->cantidad]);
 
         return $dataProvider;
     }

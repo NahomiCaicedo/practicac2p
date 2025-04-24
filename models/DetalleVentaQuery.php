@@ -3,11 +3,11 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[Actor]].
+ * This is the ActiveQuery class for [[DetalleVenta]].
  *
- * @see Actor
+ * @see DetalleVenta
  */
-class ActorQuery extends \yii\db\ActiveQuery
+class DetalleVentaQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class ActorQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return Actor[]|array
+     * @return DetalleVenta[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class ActorQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return Actor|array|null
+     * @return DetalleVenta|array|null
      */
     public function one($db = null)
     {

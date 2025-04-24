@@ -2,16 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\Actor;
-use app\models\ActorSearch;
+use app\models\Cliente;
+use app\models\ClienteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ActorController implements the CRUD actions for Actor model.
+ * ClienteController implements the CRUD actions for Cliente model.
  */
-class ActorController extends Controller
+class ClienteController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +32,13 @@ class ActorController extends Controller
     }
 
     /**
-     * Lists all Actor models.
+     * Lists all Cliente models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new ActorSearch();
+        $searchModel = new ClienteSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,30 +48,30 @@ class ActorController extends Controller
     }
 
     /**
-     * Displays a single Actor model.
-     * @param int $idactor Idactor
+     * Displays a single Cliente model.
+     * @param int $idcliente Idcliente
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($idactor)
+    public function actionView($idcliente)
     {
         return $this->render('view', [
-            'model' => $this->findModel($idactor),
+            'model' => $this->findModel($idcliente),
         ]);
     }
 
     /**
-     * Creates a new Actor model.
+     * Creates a new Cliente model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Actor();
+        $model = new Cliente();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'idactor' => $model->idactor]);
+                return $this->redirect(['view', 'idcliente' => $model->idcliente]);
             }
         } else {
             $model->loadDefaultValues();
@@ -83,18 +83,18 @@ class ActorController extends Controller
     }
 
     /**
-     * Updates an existing Actor model.
+     * Updates an existing Cliente model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $idactor Idactor
+     * @param int $idcliente Idcliente
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($idactor)
+    public function actionUpdate($idcliente)
     {
-        $model = $this->findModel($idactor);
+        $model = $this->findModel($idcliente);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'idactor' => $model->idactor]);
+            return $this->redirect(['view', 'idcliente' => $model->idcliente]);
         }
 
         return $this->render('update', [
@@ -103,29 +103,29 @@ class ActorController extends Controller
     }
 
     /**
-     * Deletes an existing Actor model.
+     * Deletes an existing Cliente model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $idactor Idactor
+     * @param int $idcliente Idcliente
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($idactor)
+    public function actionDelete($idcliente)
     {
-        $this->findModel($idactor)->delete();
+        $this->findModel($idcliente)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Actor model based on its primary key value.
+     * Finds the Cliente model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $idactor Idactor
-     * @return Actor the loaded model
+     * @param int $idcliente Idcliente
+     * @return Cliente the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($idactor)
+    protected function findModel($idcliente)
     {
-        if (($model = Actor::findOne(['idactor' => $idactor])) !== null) {
+        if (($model = Cliente::findOne(['idcliente' => $idcliente])) !== null) {
             return $model;
         }
 
