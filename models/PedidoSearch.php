@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Venta;
+use app\models\Pedido;
 
 /**
- * VentaSearch represents the model behind the search form of `app\models\Venta`.
+ * PedidoSearch represents the model behind the search form of `app\models\Pedido`.
  */
-class VentaSearch extends Venta
+class PedidoSearch extends Pedido
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class VentaSearch extends Venta
     public function rules()
     {
         return [
-            [['idventa', 'total', 'cliente_idcliente'], 'integer'],
-            [['fecha_venta'], 'safe'],
+            [['idpedido', 'fk_idcliente'], 'integer'],
+            [['fecha_pedido', 'estado_pedido'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class VentaSearch extends Venta
      */
     public function search($params, $formName = null)
     {
-        $query = Venta::find();
+        $query = Pedido::find();
 
         // add conditions that should always apply here
 
@@ -59,11 +59,12 @@ class VentaSearch extends Venta
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'idventa' => $this->idventa,
-            'fecha_venta' => $this->fecha_venta,
-            'total' => $this->total,
-            'cliente_idcliente' => $this->cliente_idcliente,
+            'idpedido' => $this->idpedido,
+            'fk_idcliente' => $this->fk_idcliente,
         ]);
+
+        $query->andFilterWhere(['like', 'fecha_pedido', $this->fecha_pedido])
+            ->andFilterWhere(['like', 'estado_pedido', $this->estado_pedido]);
 
         return $dataProvider;
     }

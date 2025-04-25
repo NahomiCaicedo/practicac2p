@@ -2,16 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\Productos;
-use app\models\ProductosSearch;
+use app\models\Producto;
+use app\models\ProductoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ProductosController implements the CRUD actions for Productos model.
+ * ProductoController implements the CRUD actions for Producto model.
  */
-class ProductosController extends Controller
+class ProductoController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +32,13 @@ class ProductosController extends Controller
     }
 
     /**
-     * Lists all Productos models.
+     * Lists all Producto models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new ProductosSearch();
+        $searchModel = new ProductoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +48,7 @@ class ProductosController extends Controller
     }
 
     /**
-     * Displays a single Productos model.
+     * Displays a single Producto model.
      * @param int $idproducto Idproducto
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,13 +61,13 @@ class ProductosController extends Controller
     }
 
     /**
-     * Creates a new Productos model.
+     * Creates a new Producto model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Productos();
+        $model = new Producto();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -83,7 +83,7 @@ class ProductosController extends Controller
     }
 
     /**
-     * Updates an existing Productos model.
+     * Updates an existing Producto model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $idproducto Idproducto
      * @return string|\yii\web\Response
@@ -103,7 +103,7 @@ class ProductosController extends Controller
     }
 
     /**
-     * Deletes an existing Productos model.
+     * Deletes an existing Producto model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $idproducto Idproducto
      * @return \yii\web\Response
@@ -117,15 +117,15 @@ class ProductosController extends Controller
     }
 
     /**
-     * Finds the Productos model based on its primary key value.
+     * Finds the Producto model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $idproducto Idproducto
-     * @return Productos the loaded model
+     * @return Producto the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($idproducto)
     {
-        if (($model = Productos::findOne(['idproducto' => $idproducto])) !== null) {
+        if (($model = Producto::findOne(['idproducto' => $idproducto])) !== null) {
             return $model;
         }
 

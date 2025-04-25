@@ -1,24 +1,24 @@
 <?php
 
-use app\models\Productos;
+use app\models\Detallepedido;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /** @var yii\web\View $this */
-/** @var app\models\ProductosSearch $searchModel */
+/** @var app\models\DetallepedidoSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = Yii::t('app', 'Productos');
+$this->title = Yii::t('app', 'Detallepedidos');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="productos-index">
+<div class="detallepedido-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Productos'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Detallepedido'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
@@ -30,15 +30,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'idproducto',
-            'nombre',
-            'categoria',
-            'precio',
-            'stock',
+            'iddetallepedido',
+            'cantidad',
+            'precio_unitario',
+            'precio_total',
+            'fk_idpedido',
+            //'fk_idproducto',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Productos $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'idproducto' => $model->idproducto]);
+                'urlCreator' => function ($action, Detallepedido $model, $key, $index, $column) {
+                    return Url::toRoute([$action, 'iddetallepedido' => $model->iddetallepedido]);
                  }
             ],
         ],

@@ -3,11 +3,11 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[Productos]].
+ * This is the ActiveQuery class for [[Pedido]].
  *
- * @see Productos
+ * @see Pedido
  */
-class ProductosQuery extends \yii\db\ActiveQuery
+class PedidoQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class ProductosQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return Productos[]|array
+     * @return Pedido[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class ProductosQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return Productos|array|null
+     * @return Pedido|array|null
      */
     public function one($db = null)
     {

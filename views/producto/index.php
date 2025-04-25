@@ -1,24 +1,24 @@
 <?php
 
-use app\models\Venta;
+use app\models\Producto;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /** @var yii\web\View $this */
-/** @var app\models\VentaSearch $searchModel */
+/** @var app\models\ProductoSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = Yii::t('app', 'Ventas');
+$this->title = Yii::t('app', 'Productos');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="venta-index">
+<div class="producto-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Venta'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Producto'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
@@ -30,14 +30,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'idventa',
-            'fecha_venta',
-            'total',
-            'cliente_idcliente',
+            'idproducto',
+            'nombre',
+            'descripcion',
+            'precio',
+            'fk_idcategoria',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Venta $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'idventa' => $model->idventa]);
+                'urlCreator' => function ($action, Producto $model, $key, $index, $column) {
+                    return Url::toRoute([$action, 'idproducto' => $model->idproducto]);
                  }
             ],
         ],

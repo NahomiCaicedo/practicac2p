@@ -4,21 +4,21 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var app\models\Venta $model */
+/** @var app\models\Pedido $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="venta-form">
+<div class="pedido-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'idventa')->textInput() ?>
+    <?= $form->field($model, 'idpedido')->textInput() ?>
 
-    <?= $form->field($model, 'fecha_venta')->textInput() ?>
+    <?= $form->field($model, 'fecha_pedido')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'total')->textInput() ?>
+    <?= $form->field($model, 'estado_pedido')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'cliente_idcliente')->textInput() ?>
+    <?= $form->field($model, 'fk_idcliente')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var app\models\Productos $model */
+/** @var app\models\Producto $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="productos-form">
+<div class="producto-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -16,11 +16,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'categoria')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'precio')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'stock')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'fk_idcategoria')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

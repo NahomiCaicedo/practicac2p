@@ -2,16 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\Venta;
-use app\models\VentaSearch;
+use app\models\Detallepedido;
+use app\models\DetallepedidoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * VentaController implements the CRUD actions for Venta model.
+ * DetallepedidoController implements the CRUD actions for Detallepedido model.
  */
-class VentaController extends Controller
+class DetallepedidoController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +32,13 @@ class VentaController extends Controller
     }
 
     /**
-     * Lists all Venta models.
+     * Lists all Detallepedido models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new VentaSearch();
+        $searchModel = new DetallepedidoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,30 +48,30 @@ class VentaController extends Controller
     }
 
     /**
-     * Displays a single Venta model.
-     * @param int $idventa Idventa
+     * Displays a single Detallepedido model.
+     * @param int $iddetallepedido Iddetallepedido
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($idventa)
+    public function actionView($iddetallepedido)
     {
         return $this->render('view', [
-            'model' => $this->findModel($idventa),
+            'model' => $this->findModel($iddetallepedido),
         ]);
     }
 
     /**
-     * Creates a new Venta model.
+     * Creates a new Detallepedido model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Venta();
+        $model = new Detallepedido();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'idventa' => $model->idventa]);
+                return $this->redirect(['view', 'iddetallepedido' => $model->iddetallepedido]);
             }
         } else {
             $model->loadDefaultValues();
@@ -83,18 +83,18 @@ class VentaController extends Controller
     }
 
     /**
-     * Updates an existing Venta model.
+     * Updates an existing Detallepedido model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $idventa Idventa
+     * @param int $iddetallepedido Iddetallepedido
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($idventa)
+    public function actionUpdate($iddetallepedido)
     {
-        $model = $this->findModel($idventa);
+        $model = $this->findModel($iddetallepedido);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'idventa' => $model->idventa]);
+            return $this->redirect(['view', 'iddetallepedido' => $model->iddetallepedido]);
         }
 
         return $this->render('update', [
@@ -103,29 +103,29 @@ class VentaController extends Controller
     }
 
     /**
-     * Deletes an existing Venta model.
+     * Deletes an existing Detallepedido model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $idventa Idventa
+     * @param int $iddetallepedido Iddetallepedido
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($idventa)
+    public function actionDelete($iddetallepedido)
     {
-        $this->findModel($idventa)->delete();
+        $this->findModel($iddetallepedido)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Venta model based on its primary key value.
+     * Finds the Detallepedido model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $idventa Idventa
-     * @return Venta the loaded model
+     * @param int $iddetallepedido Iddetallepedido
+     * @return Detallepedido the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($idventa)
+    protected function findModel($iddetallepedido)
     {
-        if (($model = Venta::findOne(['idventa' => $idventa])) !== null) {
+        if (($model = Detallepedido::findOne(['iddetallepedido' => $iddetallepedido])) !== null) {
             return $model;
         }
 

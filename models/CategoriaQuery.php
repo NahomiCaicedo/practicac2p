@@ -3,11 +3,11 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[Venta]].
+ * This is the ActiveQuery class for [[Categoria]].
  *
- * @see Venta
+ * @see Categoria
  */
-class VentaQuery extends \yii\db\ActiveQuery
+class CategoriaQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class VentaQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return Venta[]|array
+     * @return Categoria[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class VentaQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return Venta|array|null
+     * @return Categoria|array|null
      */
     public function one($db = null)
     {

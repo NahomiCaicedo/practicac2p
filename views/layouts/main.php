@@ -43,9 +43,13 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             ['label' => 'Sobre nosotros', 'url' => ['/site/about']],
             ['label' => 'Contáctenos', 'url' => ['/site/contact']],
             ['label' => 'Clientes', 'url' => ['/cliente/index']],
-            ['label' => 'Ventas', 'url' => ['/venta/index']],
-            ['label' => 'Productos', 'url' => ['/productos/index']],
-            ['label' => 'Detalles de ventas', 'url' => ['/detalle_venta/index']],
+            ['label' => 'Pedidos', 'url' => ['/pedido/index']],
+            ['label' => 'Productos', 'url' => ['/producto/index']],
+            ['label' => 'Categorias', 'url' => ['/categoria/index']],
+            ['label' => 'Detalles', 'url' => ['/detallepedido/index']],
+
+
+
 
             Yii::$app->user->isGuest
                 ? ['label' => 'Iniciar sesión', 'url' => ['/site/login']]
