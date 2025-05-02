@@ -10,10 +10,13 @@ use yii\widgets\ActiveForm;
 
 <div class="categoria-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+            'options' => ['enctype' => 'multipart/form-data']
+        ]); ?>
 
-    <?= $form->field($model, 'idcategoria')->textInput() ?>
+    <?php //$form->field($model, 'idcategoria')->textInput() ?>
 
+    <?= $form->field($model, 'imageFile')->fileInput()->label('Seleccionar categoria') ?>
     <?= $form->field($model, 'nombre_categoria')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>

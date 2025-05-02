@@ -40,13 +40,23 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'options' => ['class' => 'navbar-nav'],
         'items' => [
             ['label' => 'Inicio', 'url' => ['/site/index']],
-            ['label' => 'Sobre nosotros', 'url' => ['/site/about']],
-            ['label' => 'Contáctenos', 'url' => ['/site/contact']],
-            ['label' => 'Clientes', 'url' => ['/cliente/index']],
-            ['label' => 'Pedidos', 'url' => ['/pedido/index']],
-            ['label' => 'Productos', 'url' => ['/producto/index']],
-            ['label' => 'Categorias', 'url' => ['/categoria/index']],
-            ['label' => 'Detalles', 'url' => ['/detallepedido/index']],
+            //['label' => 'Sobre nosotros', 'url' => ['/site/about']],
+            //['label' => 'Contáctenos', 'url' => ['/site/contact']],
+            //['label' => 'Clientes', 'url' => ['/cliente/index']],
+            //['label' => 'Pedidos', 'url' => ['/pedido/index']],
+            //['label' => 'Productos', 'url' => ['/producto/index']],
+            //['label' => 'Categorias', 'url' => ['/categoria/index']],
+            //['label' => 'Detalles', 'url' => ['/detallepedido/index']],
+            [
+                'label' => 'Gestión',
+                'items' => [
+                    ['label' => 'Clientes', 'url' => ['/cliente/index']],
+                    ['label' => 'Pedidos', 'url' => ['/pedido/index']],
+                    ['label' => 'Productos', 'url' => ['/producto/index']],
+                    ['label' => 'Categorias', 'url' => ['/categoria/index']],
+                    ['label' => 'Detalles', 'url' => ['/detallepedido/index']],
+                ],
+            ],
 
 
 
