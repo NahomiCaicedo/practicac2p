@@ -2,11 +2,14 @@
 
 namespace app\controllers;
 
+use Yii;
+
 use app\models\Producto;
 use app\models\ProductoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * ProductoController implements the CRUD actions for Producto model.
@@ -68,17 +71,36 @@ class ProductoController extends Controller
     public function actionCreate()
     {
         $model = new Producto();
+        $message = '';
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'idproducto' => $model->idproducto]);
+        if ($this->request->isPost){
+            $transaction = Yii::$app->db->beginTransaction();
+            try{
+                if($model->load($this->request->post())){
+                    $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+                    if($model->save() && (!$model->imageFile || $model->upload())){
+                        $transaction->commit();
+                        return $this->redirect(['view', 'idproducto' => $model->idproducto]);
+                    }else{
+                        $message = 'Error al guardar el producto';
+                        $transaction->rollBack();
+                    }
+                    
+                }else{
+                    $message = 'Error al cargar la portada';
+                    $transaction->rollBack();
+                }
+            }catch (\Exception $e){
+                $transaction->rollBack();
+                $message = 'Error al guardar el producto';
             }
-        } else {
+        }else{
             $model->loadDefaultValues();
         }
 
         return $this->render('create', [
             'model' => $model,
+            'message'=> $message,
         ]);
     }
 
@@ -92,13 +114,20 @@ class ProductoController extends Controller
     public function actionUpdate($idproducto)
     {
         $model = $this->findModel($idproducto);
+        $message = '';
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'idproducto' => $model->idproducto]);
+        if($this->request->isPost && $model->load($this->request->post())){
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+
+            if($model->save() && (!$model->imageFile || $model->upload())){
+                return $this->redirect(['view', 'idproducto' => $model->idproducto]);
+            }else{
+                $message = 'Error al guardar el producto';
+            }
         }
-
         return $this->render('update', [
             'model' => $model,
+            'message' => 'message',
         ]);
     }
 
@@ -111,7 +140,9 @@ class ProductoController extends Controller
      */
     public function actionDelete($idproducto)
     {
-        $this->findModel($idproducto)->delete();
+        $model = $this->findModel($idproducto);
+        $model->deletePortada();
+        $model->delete();
 
         return $this->redirect(['index']);
     }
@@ -123,6 +154,7 @@ class ProductoController extends Controller
      * @return Producto the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
+
     protected function findModel($idproducto)
     {
         if (($model = Producto::findOne(['idproducto' => $idproducto])) !== null) {

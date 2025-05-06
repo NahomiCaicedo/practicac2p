@@ -10,9 +10,24 @@ use yii\widgets\ActiveForm;
 
 <div class="producto-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'options' => [
+            'enctype' => 'multipart/form-data'
+        ]
+    ]); ?>
 
     <?= $form->field($model, 'idproducto')->textInput() ?>
+    <?php if($model->Portada): ?>
+        <div class="form-group">
+            <?= Html::label('Imagen Actual') ?>
+            <div>
+            <?= Html::img(Yii::getAlias('@web' . '/portadas/' . $model->Portada,['style' => 'width: 200px']))?>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <?php //$form->field($model, 'Portada')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'imageFile')->fileInput()->label('Selecionar portada') ?>
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 

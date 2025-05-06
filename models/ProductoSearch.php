@@ -18,7 +18,7 @@ class ProductoSearch extends Producto
     {
         return [
             [['idproducto', 'fk_idcategoria'], 'integer'],
-            [['nombre', 'descripcion', 'precio'], 'safe'],
+            [['Portada', 'nombre', 'descripcion', 'precio'], 'safe'],
         ];
     }
 
@@ -63,7 +63,8 @@ class ProductoSearch extends Producto
             'fk_idcategoria' => $this->fk_idcategoria,
         ]);
 
-        $query->andFilterWhere(['like', 'nombre', $this->nombre])
+        $query->andFilterWhere(['like', 'Portada', $this->Portada])
+            ->andFilterWhere(['like', 'nombre', $this->nombre])
             ->andFilterWhere(['like', 'descripcion', $this->descripcion])
             ->andFilterWhere(['like', 'precio', $this->precio]);
 

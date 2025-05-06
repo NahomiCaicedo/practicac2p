@@ -20,13 +20,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'idproducto') ?>
 
+    <?= $form->field($model, 'Portada') ?>
+
     <?= $form->field($model, 'nombre') ?>
 
     <?= $form->field($model, 'descripcion') ?>
 
     <?= $form->field($model, 'precio') ?>
 
-    <?= $form->field($model, 'fk_idcategoria') ?>
+    <?php // echo $form->field($model, 'fk_idcategoria') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

@@ -30,11 +30,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'idproducto',
+            //'idproducto',
+            //'Portada',
+            [
+                'attribute' => 'Portada',
+                'format' => 'raw',
+                'value' => function(Producto $model){
+                    if($model->Portada)
+                    return Html::img(Yii::getAlias('@web' . '/portadas/' . $model->Portada), ['style' => 'width: 80px']);
+                return null;
+                }
+            ],
             'nombre',
             'descripcion',
             'precio',
-            'fk_idcategoria',
+            //'fk_idcategoria',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Producto $model, $key, $index, $column) {

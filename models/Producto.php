@@ -3,11 +3,13 @@
 namespace app\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "producto".
  *
  * @property int $idproducto
+ * @property string|null $Portada
  * @property string|null $nombre
  * @property string|null $descripcion
  * @property string|null $precio
@@ -18,6 +20,7 @@ use Yii;
  */
 class Producto extends \yii\db\ActiveRecord
 {
+    public $imageFile;
 
 
     /**
@@ -32,17 +35,19 @@ class Producto extends \yii\db\ActiveRecord
      * {@inheritdoc}
      */
     public function rules()
-    {
-        return [
-            [['nombre', 'descripcion', 'precio'], 'default', 'value' => null],
-            [['idproducto', 'fk_idcategoria'], 'required'],
-            [['idproducto', 'fk_idcategoria'], 'integer'],
-            [['nombre', 'descripcion', 'precio'], 'string', 'max' => 45],
-            [['idproducto'], 'unique'],
-            [['fk_idcategoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categoria::class, 'targetAttribute' => ['fk_idcategoria' => 'idcategoria']],
-        ];
+   {
+      return [
+        [['Portada', 'nombre', 'descripcion', 'precio'], 'default', 'value' => null],
+        [['idproducto', 'fk_idcategoria'], 'required'],
+        [['idproducto', 'fk_idcategoria'], 'integer'],
+        [['Portada'], 'string', 'max' => 255],
+        [['nombre', 'descripcion', 'precio'], 'string', 'max' => 45],
+        [['idproducto'], 'unique'],
+        [['fk_idcategoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categoria::class, 'targetAttribute' => ['fk_idcategoria' => 'idcategoria']],
+        [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+      ];
     }
-
+       
     /**
      * {@inheritdoc}
      */
@@ -50,6 +55,7 @@ class Producto extends \yii\db\ActiveRecord
     {
         return [
             'idproducto' => Yii::t('app', 'Idproducto'),
+            'Portada' => Yii::t('app', 'Portada'),
             'nombre' => Yii::t('app', 'Nombre'),
             'descripcion' => Yii::t('app', 'Descripcion'),
             'precio' => Yii::t('app', 'Precio'),
@@ -57,6 +63,37 @@ class Producto extends \yii\db\ActiveRecord
         ];
     }
 
+    public function upload()
+    {
+        if ($this->validate()) {
+            if($this->isNewRecord){
+                if(!$this->save(false)){
+                    return false;
+                }
+            }
+            if($this->imageFile instanceof UploadedFile){
+                $filename = $this->idproducto . '.' . $this->imageFile->extension;
+                $path = Yii::getAlias('@webroot/portadas/') . $filename;
+
+                if($this->imageFile->saveAs($path)){
+                    if($this->Portada && $this->Portada !== $filename){
+                        $this->deletePortada();
+                    }
+                    $this ->Portada = $filename;
+                }
+            }
+          return $this->save(false);  
+        }
+        return false;
+    }
+
+    public function deletePortada()
+    {
+        $path = Yii::getAlias('@webroot/portadas/') . $this->portada;
+        if(file_exists($path)){
+            unlink($path);
+        }
+    }
     /**
      * Gets query for [[Detallepedidos]].
      *
