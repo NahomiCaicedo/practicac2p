@@ -40,8 +40,9 @@ class Producto extends \yii\db\ActiveRecord
         [['Portada', 'nombre', 'descripcion', 'precio'], 'default', 'value' => null],
         [['idproducto', 'fk_idcategoria'], 'required'],
         [['idproducto', 'fk_idcategoria'], 'integer'],
-        [['Portada'], 'string', 'max' => 255],
-        [['nombre', 'descripcion', 'precio'], 'string', 'max' => 45],
+        [['Portada', 'descripcion'], 'string', 'max' => 255],
+        [['nombre'], 'string', 'max' => 100],
+        [['precio'], 'string', 'max' => 45],
         [['idproducto'], 'unique'],
         [['fk_idcategoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categoria::class, 'targetAttribute' => ['fk_idcategoria' => 'idcategoria']],
         [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
@@ -59,7 +60,7 @@ class Producto extends \yii\db\ActiveRecord
             'nombre' => Yii::t('app', 'Nombre'),
             'descripcion' => Yii::t('app', 'Descripcion'),
             'precio' => Yii::t('app', 'Precio'),
-            'fk_idcategoria' => Yii::t('app', 'Fk Idcategoria'),
+            'fk_idcategoria' => Yii::t('app', 'Categoria'),
         ];
     }
 
@@ -72,7 +73,7 @@ class Producto extends \yii\db\ActiveRecord
                 }
             }
             if($this->imageFile instanceof UploadedFile){
-                $filename = $this->idproducto . '.' . $this->imageFile->extension;
+                $filename = $this->idproducto . '.' . $this->nombre . '.' . $this->imageFile->extension;
                 $path = Yii::getAlias('@webroot/portadas/') . $filename;
 
                 if($this->imageFile->saveAs($path)){
