@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "81530f0218eaaf54e81b6c5dd4d4589f",
+    "content-hash": "fe4c47264e53e00ef7334e0da8be46a0",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -1245,6 +1245,46 @@
                 }
             ],
             "time": "2024-09-25T14:21:43+00:00"
+        },
+        {
+            "name": "twbs/bootstrap-icons",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twbs/icons.git",
+                "reference": "563c21abbfae9b1adfe9f6656e3471d7aa1c31c8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twbs/icons/zipball/563c21abbfae9b1adfe9f6656e3471d7aa1c31c8",
+                "reference": "563c21abbfae9b1adfe9f6656e3471d7aa1c31c8",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Otto",
+                    "email": "markdotto@gmail.com"
+                }
+            ],
+            "description": "Official open source SVG icon library for Bootstrap",
+            "homepage": "https://icons.getbootstrap.com/",
+            "keywords": [
+                "bootstrap",
+                "icon font",
+                "icons",
+                "svg"
+            ],
+            "support": {
+                "issues": "https://github.com/twbs/icons/issues",
+                "source": "https://github.com/twbs/icons/tree/main"
+            },
+            "time": "2025-05-04T17:05:25+00:00"
         },
         {
             "name": "yiisoft/yii2",
@@ -5494,7 +5534,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {},
+    "stability-flags": {
+        "twbs/bootstrap-icons": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

@@ -34,11 +34,11 @@ $this->params['breadcrumbs'][] = $this->title;
             //'Portada',
             [
                 'attribute' => 'Portada',
-                'format' => 'raw',
+                'format' => 'html',
                 'value' => function(Producto $model){
                     if($model->Portada)
-                    return Html::img(Yii::getAlias('@web' . '/portadas/' . $model->Portada), ['style' => 'width: 80px']);
-                return null;
+                       return Html::img(Yii::getAlias('@web') . '/portadas/' . $model->Portada, ['style' => 'width: 100px']);
+                    return null;
                 }
             ],
             'nombre',

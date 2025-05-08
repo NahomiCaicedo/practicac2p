@@ -5093,6 +5093,49 @@
             "install-path": "../theseer/tokenizer"
         },
         {
+            "name": "twbs/bootstrap-icons",
+            "version": "dev-main",
+            "version_normalized": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twbs/icons.git",
+                "reference": "563c21abbfae9b1adfe9f6656e3471d7aa1c31c8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twbs/icons/zipball/563c21abbfae9b1adfe9f6656e3471d7aa1c31c8",
+                "reference": "563c21abbfae9b1adfe9f6656e3471d7aa1c31c8",
+                "shasum": ""
+            },
+            "time": "2025-05-04T17:05:25+00:00",
+            "default-branch": true,
+            "type": "library",
+            "installation-source": "dist",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Otto",
+                    "email": "markdotto@gmail.com"
+                }
+            ],
+            "description": "Official open source SVG icon library for Bootstrap",
+            "homepage": "https://icons.getbootstrap.com/",
+            "keywords": [
+                "bootstrap",
+                "icon font",
+                "icons",
+                "svg"
+            ],
+            "support": {
+                "issues": "https://github.com/twbs/icons/issues",
+                "source": "https://github.com/twbs/icons/tree/main"
+            },
+            "install-path": "../twbs/bootstrap-icons"
+        },
+        {
             "name": "yiisoft/yii2",
             "version": "dev-master",
             "version_normalized": "dev-master",

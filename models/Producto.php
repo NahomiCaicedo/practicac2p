@@ -21,7 +21,7 @@ use yii\web\UploadedFile;
 class Producto extends \yii\db\ActiveRecord
 {
     public $imageFile;
-
+    public $detallepedidos = [];
 
     /**
      * {@inheritdoc}
@@ -44,6 +44,7 @@ class Producto extends \yii\db\ActiveRecord
         [['nombre'], 'string', 'max' => 100],
         [['precio'], 'string', 'max' => 45],
         [['idproducto'], 'unique'],
+        [['detallepedidos'], 'each', 'rule' => ['integer']],
         [['fk_idcategoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categoria::class, 'targetAttribute' => ['fk_idcategoria' => 'idcategoria']],
         [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
       ];
@@ -61,6 +62,7 @@ class Producto extends \yii\db\ActiveRecord
             'descripcion' => Yii::t('app', 'Descripcion'),
             'precio' => Yii::t('app', 'Precio'),
             'fk_idcategoria' => Yii::t('app', 'Categoria'),
+            'detallepedidos' => Yii::t('app', 'Detalles de pedidos'),
         ];
     }
 

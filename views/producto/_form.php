@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Categoria;
+use app\models\Detallepedido;
 
 /** @var yii\web\View $this */
 /** @var app\models\Producto $model */
@@ -43,6 +44,20 @@ use app\models\Categoria;
                                                                                               ->all(), 'idcategoria', 'nombre_categoria_completo'),
                                                                                               ['prompt'=>'Seleccione una categoria', 'required'=>true])
     ?>
+
+    <div class= "mb-3">
+        <?= Html::label('Selecciones el detalle del pedido', 'detallepedido-search',['class'=>'form-label']) ?>
+        <div class="input-group">
+            <input type="text" class="detallepedido-search" placeholder="Buscar detalle" class="form-control">
+            <a href="<?= Yii::$app->urlManager->createUrl(['detallepedido/create']) ?>" class="btn btn-secondary">
+              <i class="bi bi-plus"></i> 
+              Nuevo detalle</a> 
+        </div>
+        <?= Html::activeListBox($model, 'detallepedidos', ArrayHelper::map(Detallepedido::find()->orderBy(['cantidad' => SORT_ASC])->all(),
+                                                                                             'iddetallepedido',function($detallepedido){
+                                                                                                return $detallepedido->cantidad . ',' . $detallepedido->precio_unitario;
+                                                                                                }), ['multiple' => true, 'size' => 10, 'id'=>'detallepedidos-select', 'class'=>'form-control mt-2']) ?>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
