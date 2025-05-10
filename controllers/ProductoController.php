@@ -10,6 +10,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use yii\helpers\ArrayHelper;
+
 
 /**
  * ProductoController implements the CRUD actions for Producto model.
@@ -125,11 +127,16 @@ class ProductoController extends Controller
                 $message = 'Error al guardar el producto';
             }
         }
+
+        $model->detallepedidos = ArrayHelper::getColumn($model->getDetallepedidos()->asArray()->all(), 'iddetallepedido');
+
         return $this->render('update', [
             'model' => $model,
             'message' => 'message',
         ]);
     }
+
+
 
     /**
      * Deletes an existing Producto model.

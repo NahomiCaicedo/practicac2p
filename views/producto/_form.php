@@ -46,9 +46,9 @@ use app\models\Detallepedido;
     ?>
 
     <div class= "mb-3">
-        <?= Html::label('Selecciones el detalle del pedido', 'detallepedido-search',['class'=>'form-label']) ?>
+        <?= Html::label('Seleccione el detalle del pedido', 'detallepedido-search',['class'=>'form-label']) ?>
         <div class="input-group">
-            <input type="text" class="detallepedido-search" placeholder="Buscar detalle" class="form-control">
+            <input type="text" id="detallepedido-search" placeholder="Buscar detalle" class="form-control">
             <a href="<?= Yii::$app->urlManager->createUrl(['detallepedido/create']) ?>" class="btn btn-secondary">
               <i class="bi bi-plus"></i> 
               Nuevo detalle</a> 
@@ -66,3 +66,19 @@ use app\models\Detallepedido;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+
+
+<script>
+    document.querySelector("#detallepedido-search").addEventListener('input', function(){
+        let detallepedidos = document.querySelectorAll("#detallepedidos-select option");
+        detallepedidos.forEach(detallepedido => {
+            if (detallepedido.text.toLowerCase().includes(this.value.toLowerCase())) {
+                detallepedido.style.display = "block";
+            } else {
+                detallepedido.style.display = "none";
+            }
+        });
+    });
+</script>
+    
