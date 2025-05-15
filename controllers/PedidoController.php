@@ -7,6 +7,7 @@ use app\models\PedidoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * PedidoController implements the CRUD actions for Pedido model.
@@ -21,8 +22,18 @@ class PedidoController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::className(),
+                    'only' => ['update', 'delete'], // Solo estas acciones requieren autenticación
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'roles' => ['@'], // Usuarios autenticados
+                        ],
+                    ],
+                ],
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => \yii\filters\VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
                     ],

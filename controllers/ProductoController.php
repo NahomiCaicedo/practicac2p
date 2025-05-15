@@ -11,6 +11,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
 
 
 /**
@@ -18,14 +19,24 @@ use yii\helpers\ArrayHelper;
  */
 class ProductoController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
     public function behaviors()
     {
         return array_merge(
             parent::behaviors(),
             [
+                // Control de acceso
+                'access' => [
+                    'class' => AccessControl::class,
+                    'only' => ['create', 'update', 'delete'], // Solo estas acciones estarán restringidas
+                    'rules' => [
+                        [
+                            'actions' => ['create', 'update', 'delete'],
+                            'allow' => true,
+                            'roles' => ['@'], // Solo usuarios autenticados
+                        ],
+                    ],
+                ],
+                // Verbo HTTP permitido para cada acción
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [

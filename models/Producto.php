@@ -92,7 +92,7 @@ class Producto extends \yii\db\ActiveRecord
 
     public function deletePortada()
     {
-        $path = Yii::getAlias('@webroot/portadas/') . $this->portada;
+        $path = Yii::getAlias('@webroot/portadas/') . $this->Portada;
         if(file_exists($path)){
             unlink($path);
         }
