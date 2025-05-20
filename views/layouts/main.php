@@ -25,6 +25,35 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <head>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <style>
+        .custom-navbar {
+            background-color: #D9B382;
+        }
+
+        /* Color del texto en el navbar */
+        .custom-navbar .nav-link,
+        .custom-navbar .navbar-brand {
+            color: #5A3E1B; /* Cambia a tu color deseado */
+        }
+        /* Cuando haces hover sobre los links del navbar */
+        .custom-navbar .nav-link:hover,
+        .custom-navbar .nav-link:focus {
+            color: #A26E2E; /* Cambia a tu color deseado */
+        }
+
+        .custom-navbar .dropdown-menu {
+            background-color: #D9B382;
+        }
+        .custom-navbar .dropdown-menu .dropdown-item {
+            color: #5A3E1B;
+        }
+        .custom-navbar .dropdown-menu .dropdown-item:hover,
+        .custom-navbar .dropdown-menu .dropdown-item:focus {
+            background-color: #A26E2E;
+            color: white;
+        }
+</style>
+    </style>
 </head>
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
@@ -34,7 +63,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     NavBar::begin([
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
-        'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
+        'options' => ['class' => 'navbar-expand-md navbar-dark custom-navbar fixed-top']
+
     ]);
     echo Nav::widget([
     'options' => ['class' => 'navbar-nav ms-auto'],
@@ -78,13 +108,12 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 </header>
 
 <main id="main" class="flex-shrink-0" role="main">
-    <div class="container">
+    
         <?php if (!empty($this->params['breadcrumbs'])): ?>
             <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
         <?php endif ?>
         <?= Alert::widget() ?>
         <?= $content ?>
-    </div>
 </main>
 
 <footer id="footer" class="mt-auto py-3 bg-light">
