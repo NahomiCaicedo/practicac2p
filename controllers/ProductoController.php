@@ -91,7 +91,7 @@ class ProductoController extends Controller
             try{
                 if($model->load($this->request->post())){
                     $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-                    if($model->save() && (!$model->imageFile || $model->upload())){
+                    if ((!$model->imageFile || $model->upload()) && $model->save()) {
                         $transaction->commit();
                         return $this->redirect(['view', 'idproducto' => $model->idproducto]);
                     }else{
@@ -105,7 +105,7 @@ class ProductoController extends Controller
                 }
             }catch (\Exception $e){
                 $transaction->rollBack();
-                $message = 'Error al guardar el producto';
+                $message = 'Error al guardar el producto: ' . $e->getMessage();
             }
         }else{
             $model->loadDefaultValues();
@@ -130,12 +130,26 @@ class ProductoController extends Controller
         $message = '';
 
         if($this->request->isPost && $model->load($this->request->post())){
-            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-
-            if($model->save() && (!$model->imageFile || $model->upload())){
-                return $this->redirect(['view', 'idproducto' => $model->idproducto]);
-            }else{
-                $message = 'Error al guardar el producto';
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+                
+                // Primero procesar la imagen (si existe), luego guardar
+                if (!$model->imageFile || $model->upload()) {
+                    if ($model->save()) {
+                        $transaction->commit();
+                        return $this->redirect(['view', 'idproducto' => $model->idproducto]);
+                    } else {
+                        $message = 'Error al guardar el producto';
+                        $transaction->rollBack();
+                    }
+                } else {
+                    $message = 'Error al subir la imagen';
+                    $transaction->rollBack();
+                }
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                $message = 'Error al actualizar el producto: ' . $e->getMessage();
             }
         }
 
@@ -143,11 +157,9 @@ class ProductoController extends Controller
 
         return $this->render('update', [
             'model' => $model,
-            'message' => 'message',
+            'message' => $message,
         ]);
     }
-
-
 
     /**
      * Deletes an existing Producto model.
@@ -172,7 +184,6 @@ class ProductoController extends Controller
      * @return Producto the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-
     protected function findModel($idproducto)
     {
         if (($model = Producto::findOne(['idproducto' => $idproducto])) !== null) {

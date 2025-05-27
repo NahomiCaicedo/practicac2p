@@ -24,31 +24,43 @@ $this->title = 'My Yii Application';
         justify-content: center;
         text-align: center;
     }
+
+    .jumbotron {
+        background-color: rgba(217, 179, 130, 0.75); /* Marrón dorado translúcido */
+        padding: 2.5rem;
+        border-radius: 16px;
+        box-shadow: 0 0 15px rgba(90, 62, 27, 0.4);
+        max-width: 800px;
+    }
+
     .jumbotron h1 {
-    color: #7B4E12;
-    font-style: italic;
-    font-family: 'Georgia', serif;
-    letter-spacing: -0.05em;
-    text-shadow: 
-        0 0 10px rgba(123,78,18,0.5),
-        0 0 15px rgba(123, 78, 18, 0.5);
+        color: #7B4E12;
+        font-style: italic;
+        font-family: 'Georgia', serif;
+        letter-spacing: -0.05em;
+        text-shadow: 
+            0 0 10px rgba(123, 78, 18, 0.5),
+            0 0 15px rgba(123, 78, 18, 0.5);
     }
+
     .jumbotron h2 {
-    color: #B97527;
-    text-shadow: 
-        0 0 8px rgba(185,117,39,0.5);
-        0 0 12px rgba(185, 117, 39, 0.43);
+        color: #B97527;
+        text-shadow: 
+            0 0 8px rgba(185, 117, 39, 0.5),
+            0 0 12px rgba(185, 117, 39, 0.43);
     }
+
     .jumbotron p {
-    color: #3C2F1B;
-     text-shadow: 
-        0 0 4px rgba(60, 47, 27, 0.5),
-        0 0 8px rgba(255, 255, 255, 0.84);
+        color: #3C2F1B;
+        text-shadow: 
+            0 0 4px rgba(60, 47, 27, 0.5),
+            0 0 8px rgba(255, 255, 255, 0.84);
+        font-size: 1.1rem;
     }
 </style>
 
 <div class="site-index">
-    <div class="jumbotron bg-transparent">
+    <div class="jumbotron">
         <h2>Bienvenidos a</h2>
         <h1 class="display-4"><b>UniBelleza_Aditha</b></h1>
         <p class="lead">
@@ -57,4 +69,3 @@ $this->title = 'My Yii Application';
         </p>
     </div>
 </div>
-

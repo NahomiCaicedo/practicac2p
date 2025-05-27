@@ -3,6 +3,8 @@
 use app\models\Producto;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\grid\ActionColumn;
+use yii\grid\GridView;
 use yii\widgets\Pjax;
 
 /** @var yii\web\View $this */
@@ -31,44 +33,95 @@ $css = <<<CSS
     opacity: 0.7;
     z-index: -1;
 }
+
 .card-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 30px;
 }
+
 .card {
     width: 250px;
     height: 420px;
-    background-color: #fff;
+    background-color: #3a2c1f; /* Marrón oscuro */
     border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     overflow: hidden;
     text-align: center;
     padding: 15px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    color: #f0e9de; /* Texto claro */
+    transition: transform 0.3s ease;
 }
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+}
+
 .card img {
     width: 100%;
     height: 180px;
     object-fit: cover;
     border-radius: 8px;
+    border: 2px solid #b97527; /* borde dorado para destacar */
 }
+
 .card h5 {
     font-size: 18px;
     margin: 10px 0 5px;
+    color: #f0e9de;
 }
+
 .card p {
     font-size: 14px;
     flex-grow: 1;
     margin: 5px 0;
+    color: #d4c9b1;
 }
+
 .card .price {
     font-weight: bold;
-    color: #B97527;
+    color: #b97527; /* Color dorado brillante */
     margin: 10px 0;
+}
+
+.btn-primary {
+    background-color: #6a4e2a; /* marrón oscuro */
+    border-color: #6a4e2a;
+    color: #f0e9de;
+}
+
+.btn-primary:hover {
+    background-color: #8b6a38;
+    border-color: #8b6a38;
+    color: #fff;
+}
+
+.btn-warning {
+    background-color: #b97f2b; /* dorado mate */
+    border-color: #b97f2b;
+    color: #3a2c1f;
+}
+
+.btn-warning:hover {
+    background-color: #d1a240;
+    border-color: #d1a240;
+    color: #2b1f0e;
+}
+
+.btn-danger {
+    background-color: #a0301a; /* rojo oscuro */
+    border-color: #a0301a;
+    color: #f0e9de;
+}
+
+.btn-danger:hover {
+    background-color: #c0482a;
+    border-color: #c0482a;
+    color: #fff;
 }
 CSS;
 
@@ -88,31 +141,44 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php Pjax::begin(); ?>
 
     <div class="card-container">
-        <?php foreach ($dataProvider->getModels() as $producto): ?>
-            <div class="card">
-                <?php if ($producto->Portada): ?>
-                    <?= Html::img(Url::to('@web/portadas/' . $producto->Portada, true)) ?>
-                <?php else: ?>
-                    <div style="height:180px; background:#eee; display:flex; align-items:center; justify-content:center;">
-                        <span>Sin imagen</span>
-                    </div>
-                <?php endif; ?>
+    <?php foreach ($dataProvider->getModels() as $producto): ?>
+    <div class="card">
+        <?php if ($producto->Portada): ?>
+            <?php 
+                $imagePath = Yii::getAlias('@web') . '/portadas/' . $producto->Portada;
+                $fullImagePath = Yii::getAlias('@webroot') . '/portadas/' . $producto->Portada;
                 
-                <h5><?= Html::encode($producto->nombre) ?></h5>
-                <p><?= Html::encode($producto->descripcion) ?></p>
-                <div class="price">$<?= Html::encode($producto->precio) ?></div>
-
-                <?= Html::a('Ver', ['view', 'idproducto' => $producto->idproducto], ['class' => 'btn btn-primary btn-sm']) ?>
-                <?= Html::a('Editar', ['update', 'idproducto' => $producto->idproducto], ['class' => 'btn btn-warning btn-sm']) ?>
-                <?= Html::a('Eliminar', ['delete', 'idproducto' => $producto->idproducto], [
-                    'class' => 'btn btn-danger btn-sm',
-                    'data' => [
-                        'confirm' => '¿Estás seguro de que deseas eliminar este producto?',
-                        'method' => 'post',
-                    ],
-                ]) ?>
+                // Verificar si el archivo existe físicamente
+                if (file_exists($fullImagePath)): 
+            ?>
+                <?= Html::img($imagePath, ['alt' => $producto->nombre, 'class' => 'img-fluid']) ?>
+            <?php else: ?>
+                <div style="height:180px; background:#eee; display:flex; align-items:center; justify-content:center; color:#666;">
+                    <span>Imagen no encontrada</span>
+                </div>
+                <!-- Debug: <?= $fullImagePath ?> -->
+            <?php endif; ?>
+        <?php else: ?>
+            <div style="height:180px; background:#eee; display:flex; align-items:center; justify-content:center; color:#666;">
+                <span>Sin imagen</span>
             </div>
-        <?php endforeach; ?>
+        <?php endif; ?>
+        
+        <h5><?= Html::encode($producto->nombre) ?></h5>
+        <p><?= Html::encode($producto->descripcion) ?></p>
+        <div class="price">$<?= Html::encode($producto->precio) ?></div>
+
+        <?= Html::a('Ver', ['view', 'idproducto' => $producto->idproducto], ['class' => 'btn btn-primary btn-sm']) ?>
+        <?= Html::a('Editar', ['update', 'idproducto' => $producto->idproducto], ['class' => 'btn btn-warning btn-sm']) ?>
+        <?= Html::a('Eliminar', ['delete', 'idproducto' => $producto->idproducto], [
+            'class' => 'btn btn-danger btn-sm',
+            'data' => [
+                'confirm' => '¿Estás seguro de que deseas eliminar este producto?',
+                'method' => 'post',
+            ],
+        ]) ?>
+    </div>
+<?php endforeach; ?>
     </div>
 
     <?php Pjax::end(); ?>

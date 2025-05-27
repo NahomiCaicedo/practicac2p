@@ -35,21 +35,20 @@ class Producto extends \yii\db\ActiveRecord
      * {@inheritdoc}
      */
     public function rules()
-   {
-      return [
-        [['Portada', 'nombre', 'descripcion', 'precio'], 'default', 'value' => null],
-        [['idproducto', 'fk_idcategoria'], 'required'],
-        [['idproducto', 'fk_idcategoria'], 'integer'],
-        [['Portada', 'descripcion'], 'string', 'max' => 255],
-        [['nombre'], 'string', 'max' => 100],
-        [['precio'], 'string', 'max' => 45],
-        [['idproducto'], 'unique'],
-        [['detallepedidos'], 'each', 'rule' => ['integer']],
-        [['fk_idcategoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categoria::class, 'targetAttribute' => ['fk_idcategoria' => 'idcategoria']],
-        [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
-      ];
+    {
+        return [
+            [['Portada', 'nombre', 'descripcion', 'precio'], 'default', 'value' => null],
+            [['fk_idcategoria'], 'required'],
+            [['idproducto', 'fk_idcategoria'], 'integer'],
+            [['Portada', 'descripcion'], 'string', 'max' => 255],
+            [['nombre'], 'string', 'max' => 100],
+            [['precio'], 'string', 'max' => 45],
+            [['detallepedidos'], 'safe'],
+            [['fk_idcategoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categoria::class, 'targetAttribute' => ['fk_idcategoria' => 'idcategoria']],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, gif'],
+        ];
     }
-       
+
     /**
      * {@inheritdoc}
      */
@@ -63,40 +62,56 @@ class Producto extends \yii\db\ActiveRecord
             'precio' => Yii::t('app', 'Precio'),
             'fk_idcategoria' => Yii::t('app', 'Categoria'),
             'detallepedidos' => Yii::t('app', 'Detalles de pedidos'),
+            'imageFile' => Yii::t('app', 'Imagen del producto'),
         ];
     }
 
+    /**
+     * Maneja la subida de archivos y actualiza el atributo Portada.
+     * NO guarda el modelo - eso se hace en el controlador.
+     */
     public function upload()
     {
-        if ($this->validate()) {
-            if($this->isNewRecord){
-                if(!$this->save(false)){
-                    return false;
-                }
+        if ($this->imageFile instanceof UploadedFile) {
+            // Crear carpeta si no existe
+            $uploadPath = Yii::getAlias('@webroot/portadas/');
+            if (!is_dir($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
             }
-            if($this->imageFile instanceof UploadedFile){
-                $filename = $this->idproducto . '.' . $this->nombre . '.' . $this->imageFile->extension;
-                $path = Yii::getAlias('@webroot/portadas/') . $filename;
 
-                if($this->imageFile->saveAs($path)){
-                    if($this->Portada && $this->Portada !== $filename){
-                        $this->deletePortada();
-                    }
-                    $this ->Portada = $filename;
+            $filename = uniqid('producto_') . '.' . $this->imageFile->extension;
+            $path = $uploadPath . $filename;
+
+            if ($this->imageFile->saveAs($path)) {
+                // Eliminar imagen anterior si existe y es diferente
+                if ($this->Portada && $this->Portada !== $filename) {
+                    $this->deletePortada();
                 }
+                
+                // Solo actualizar el atributo, NO guardar el modelo
+                $this->Portada = $filename;
+                return true;
             }
-          return $this->save(false);  
+
+            return false;
         }
-        return false;
+
+        return true; // Si no hay imagen, todo bien
     }
 
+    /**
+     * Elimina la imagen anterior del servidor.
+     */
     public function deletePortada()
     {
-        $path = Yii::getAlias('@webroot/portadas/') . $this->Portada;
-        if(file_exists($path)){
-            unlink($path);
+        if ($this->Portada) {
+            $path = Yii::getAlias('@webroot/portadas/') . $this->Portada;
+            if (file_exists($path)) {
+                unlink($path);
+            }
         }
     }
+
     /**
      * Gets query for [[Detallepedidos]].
      *
@@ -125,5 +140,4 @@ class Producto extends \yii\db\ActiveRecord
     {
         return new ProductoQuery(get_called_class());
     }
-
 }
